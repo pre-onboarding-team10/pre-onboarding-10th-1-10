@@ -50,7 +50,7 @@ export const Signin = () => {
           onClick={submit}
           isDisabled={!isFormValid}
         >
-          Submit
+          로그인
         </Button>
       </VStack>
     </Center>
