@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { AuthGuard } from './components/AuthGuard';
+import { useAuth } from './hooks/useAuth';
+import { Signin } from './pages/Signin';
+import { Signup } from './pages/Signup';
+import { Todo } from './pages/Todo';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <div>react app!</div>,
+  },
+  {
+    path: '/signup',
+    element: (
+      <AuthGuard>
+        <Signup />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: '/signin',
+    element: (
+      <AuthGuard>
+        <Signin />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: '/todo',
+    element: (
+      <AuthGuard restricted>
+        <Todo />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: '*',
+    element: <Navigate to="/signin" />,
+  },
+]);
 
 function App() {
+  const { initializeAuth } = useAuth();
+  initializeAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <RouterProvider router={router} />
+    </ChakraProvider>
   );
 }
 
