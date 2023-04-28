@@ -1,26 +1,20 @@
 import { Button, Center, Text, VStack } from '@chakra-ui/react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../apis/apiClient';
-import { EmailInput } from '../components/EmailInput';
-import { PasswordInput } from '../components/PasswordInput';
-import { useFormValidation } from '../hooks/useFormValidation';
+import { validation } from '../util/validation';
+import { AuthInput } from '../components/AuthInput';
+import useInput from '../hooks/useInput';
 
 export const Signup = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { values, handleChange } = useInput();
 
-  const {
-    isFormValid,
-    email: emailValidation,
-    password: passwordValidation,
-  } = useFormValidation({ email, password });
+  const { isFormValid, email, password } = validation(values);
 
   const submit = async () => {
     try {
-      await apiClient.postSignup({ email, password });
+      await apiClient.postSignup(values);
       navigate('/signin', { replace: true });
     } catch (e) {
       console.error(e);
@@ -33,17 +27,17 @@ export const Signup = () => {
         SignUp!
       </Text>
       <VStack w="500px" spacing="10px">
-        <EmailInput
-          value={email}
-          isValid={emailValidation.isValid}
-          onChange={e => setEmail(e.target.value)}
-          errorMessage={emailValidation.errorMessage}
+        <AuthInput
+          type="email"
+          isValid={email.isValid}
+          onChange={handleChange}
+          errorMessage={email.errorMessage}
         />
-        <PasswordInput
-          value={password}
-          isValid={passwordValidation.isValid}
-          onChange={e => setPassword(e.target.value)}
-          errorMessage={passwordValidation.errorMessage}
+        <AuthInput
+          type="password"
+          isValid={password.isValid}
+          onChange={handleChange}
+          errorMessage={password.errorMessage}
         />
         <Button
           type="submit"

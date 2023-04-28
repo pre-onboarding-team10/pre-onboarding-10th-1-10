@@ -1,15 +1,15 @@
-export const useFormValidation = ({ email, password }) => {
+export const validation = ({ email, password }) => {
   const isEmailValid = email.includes('@');
   const isPasswordValid = password.length >= 8;
 
   return {
     isFormValid: isEmailValid && isPasswordValid,
     email: {
-      isValid: isEmailValid,
+      isValid: email ? isEmailValid : true,
       errorMessage: '@ 포함',
     },
     password: {
-      isValid: isPasswordValid,
+      isValid: password ? isPasswordValid : true,
       errorMessage: '8자 이상',
     },
   };
