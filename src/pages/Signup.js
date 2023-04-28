@@ -45,7 +45,7 @@ export const Signup = () => {
           onClick={submit}
           isDisabled={!isFormValid}
         >
-          Submit
+          회원가입
         </Button>
       </VStack>
     </Center>
