@@ -9,7 +9,11 @@ import { Todo } from './pages/Todo';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>react app!</div>,
+    element: (
+      <AuthGuard>
+        <Signup />
+      </AuthGuard>
+    ),
   },
   {
     path: '/signup',
