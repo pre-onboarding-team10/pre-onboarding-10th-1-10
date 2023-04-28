@@ -13,8 +13,8 @@ export const TodoAddForm = ({ createTodo }) => {
   };
 
   return (
-    <HStack w="full">
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <HStack w="full">
         <Input
           data-testid="new-todo-input"
           value={newTodo}
@@ -23,7 +23,7 @@ export const TodoAddForm = ({ createTodo }) => {
         <Button type="submit" data-testid="new-todo-add-button">
           추가
         </Button>
-      </form>
-    </HStack>
+      </HStack>
+    </form>
   );
 };
